@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwgamsfxi7qae"]
+
+[ext_resource type="Texture2D" uid="uid://cqji8m6g8pw6u" path="res://assets/PC Computer - UNO - Cards Classic.png" id="1_ltj6e"]
+[ext_resource type="Script" path="res://scripts/card.gd" id="1_si4oa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k08ln"]
+atlas = ExtResource("1_ltj6e")
+region = Rect2(4.61513, 4.71933, 165.165, 254.578)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mydbo"]
+size = Vector2(165, 250)
+
+[node name="Card" type="Node2D"]
+script = ExtResource("1_si4oa")
+
+[node name="CardImage" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.685)
+texture = SubResource("AtlasTexture_k08ln")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("RectangleShape2D_mydbo")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
