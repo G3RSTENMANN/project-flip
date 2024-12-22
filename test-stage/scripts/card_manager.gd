@@ -2,16 +2,21 @@ extends Node2D
 
 const COLLISION_MASK_CARD = 1
 const COLLISION_MASK_CARD_SLOT = 2
+const DEFAULT_CARD_MOVE_SPEED = 0.1
 
 var screen_size
 var card_being_dragged
 var is_hovering_on_card
 var mouse_card_diff
+var player_hand_reference
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport_rect().size
+	player_hand_reference = $"../PlayerHand"
+	$"../InputManager".left_mouse_button_clicked.connect(on_left_mouse_click)
+	$"../InputManager".left_mouse_button_released.connect(on_left_mouse_release)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,16 +26,6 @@ func _process(delta: float) -> void:
 		var card_pos = card_being_dragged.position
 		#card_being_dragged.position = Vector2(clamp(mouse_pos.x, 0, screen_size.x), clamp(mouse_pos.y, 0, screen_size.y))
 		card_being_dragged.position = Vector2(clamp(mouse_pos.x + mouse_card_diff.x, 0, screen_size.x), clamp(mouse_pos.y + mouse_card_diff.y, 0, screen_size.y))
-
-
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.pressed:
-			var card = raycast_check_for_card()
-			if card:
-				start_drag(card)
-		elif card_being_dragged:
-			finish_drag()
 
 
 func start_drag(card):
@@ -44,9 +39,14 @@ func finish_drag():
 	# Karte in Card-Slot droppen
 	var card_slot_found = raycast_check_for_card_slot()
 	if card_slot_found and not card_slot_found.card_in_slot:
+		player_hand_reference.remove_card_from_hand(card_being_dragged)
+		
+		# Drop Card in empty Slot
 		card_being_dragged.position = card_slot_found.position
 		card_being_dragged.get_node("Area2D/CollisionShape2D").disabled = true
 		card_slot_found.card_in_slot = true
+	else:
+		player_hand_reference.add_card_to_hand(card_being_dragged, DEFAULT_CARD_MOVE_SPEED)
 	
 	# clear temp-variables
 	card_being_dragged = null
@@ -121,3 +121,11 @@ func highlight_card(card, hovered):
 	else:
 		card.scale = Vector2(1.0, 1.0)
 		card.z_index = 1
+
+
+func on_left_mouse_click():
+	pass
+
+func on_left_mouse_release():
+	if card_being_dragged:
+		finish_drag()

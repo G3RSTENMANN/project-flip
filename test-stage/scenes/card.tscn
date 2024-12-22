@@ -5,12 +5,13 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k08ln"]
 atlas = ExtResource("1_ltj6e")
-region = Rect2(4.61513, 4.71933, 165.165, 254.578)
+region = Rect2(339.009, 520.882, 76.2873, 63.2657)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mydbo"]
 size = Vector2(165, 250)
 
 [node name="Card" type="Node2D"]
+position = Vector2(150, 890)
 script = ExtResource("1_si4oa")
 
 [node name="CardImage" type="Sprite2D" parent="."]
@@ -22,6 +23,20 @@ texture = SubResource("AtlasTexture_k08ln")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2(0.7, 0.7)
 shape = SubResource("RectangleShape2D_mydbo")
+
+[node name="Up" type="RichTextLabel" parent="."]
+offset_left = -7.0
+offset_top = -58.0
+offset_right = 49.0
+offset_bottom = -34.0
+text = "Test"
+
+[node name="Down" type="RichTextLabel" parent="."]
+offset_left = -44.0
+offset_top = 33.0
+offset_right = 20.0
+offset_bottom = 56.0
+text = "123"
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
