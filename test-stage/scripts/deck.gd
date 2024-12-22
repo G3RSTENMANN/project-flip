@@ -10,16 +10,25 @@ var player_deck
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	db_ref = preload("res://scripts/CardDatabase.gd")
-	player_deck = [Card.new(db_ref.CARDS["BG"],db_ref.CARDS["BG"])]
+	player_deck = [
+		Card.new(db_ref.CARDS["Spark"], db_ref.CARDS["Spark"], db_ref.CARDS["Spark"][3]),
+		Card.new(db_ref.CARDS["UTurn"], db_ref.CARDS["UTurn"], db_ref.CARDS["UTurn"][3]),
+		Card.new(db_ref.CARDS["BoneShield"], db_ref.CARDS["BoneShield"], db_ref.CARDS["BoneShield"][3]),
+		Card.new(db_ref.CARDS["Spark"], db_ref.CARDS["BG"], db_ref.CARDS["Spark"][3]),
+		Card.new(db_ref.CARDS["UTurn"], db_ref.CARDS["Spark"], db_ref.CARDS["UTurn"][3]),
+		Card.new(db_ref.CARDS["BG"], db_ref.CARDS["BoneShield"], db_ref.CARDS["BG"][3]),
+		# Card.new(db_ref.CARDS[""], db_ref.CARDS[""]),
+	]
 	player_deck.shuffle()
 	$RichTextLabel.text = str(player_deck.size())
 
 
 func draw_card():
 	# Delete Drawn Card from Deck
-	var card_top_name = player_deck[0].top_half.path_name
-	var card_bot_name = player_deck[0].top_half.path_name
-	player_deck.pop_front()
+	var new_card_data = player_deck.pop_front()
+	var card_top_name = new_card_data.top_half.path_name
+	var card_bot_name = new_card_data.bot_half.path_name
+	
 	if player_deck.size() == 0:
 		$Area2D/CollisionShape2D.disabled = true
 		$Sprite2D.visible = false
@@ -31,6 +40,7 @@ func draw_card():
 	# Instantiate Drawn Card in Hand
 	var card_scene = preload(CARD_SCENE_PATH)
 	var new_card = card_scene.instantiate()
+	
 	
 	# Loading Card Texture from Single Image
 	var card_image_path_top = str(REL_IMG_PATH + card_top_name + ".png")
@@ -53,10 +63,13 @@ func draw_card():
 	#new_card.get_node("CardImage").texture = img_texture
 	
 	# Setting Text on Cards
-	#new_card.get_node("Up").text = card_database_reference.CARDS[card_drawn_name][0]
-	#new_card.get_node("Down").text = card_database_reference.CARDS[card_drawn_name][1]
-	
-	
+	new_card.get_node("Up").text = str(new_card_data.top_half.cost)
+	new_card.get_node("Down").text = str(new_card_data.bot_half.cost)
+	new_card.get_node("TxtUp").text = new_card_data.top_half.text
+	new_card.get_node("TxtDown").text = new_card_data.bot_half.text
+	new_card.get_node("TxtName").text = new_card_data.card_name
+
+
 	# Integrating new card
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"

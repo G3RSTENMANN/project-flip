@@ -1,45 +1,94 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwgamsfxi7qae"]
+[gd_scene load_steps=7 format=3 uid="uid://dwgamsfxi7qae"]
 
 [ext_resource type="Script" path="res://scripts/card.gd" id="1_si4oa"]
 [ext_resource type="Texture2D" uid="uid://cnp3mrmok72ox" path="res://assets/cards/SpellCardBG.png" id="2_u5mnm"]
+[ext_resource type="FontFile" uid="uid://dxqjxmd6r0qfw" path="res://assets/fonts/PixelOperator8.ttf" id="3_lsh0b"]
+[ext_resource type="FontFile" uid="uid://bfn4jn75etsk" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="4_igxbk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2ru0o"]
+font = ExtResource("3_lsh0b")
+font_size = 17
+
+[sub_resource type="LabelSettings" id="LabelSettings_lsht8"]
+font = ExtResource("4_igxbk")
 
 [node name="Card" type="Node2D"]
-position = Vector2(132, 889)
+position = Vector2(-542, 1200)
 script = ExtResource("1_si4oa")
 
 [node name="TopImage" type="Sprite2D" parent="."]
-position = Vector2(0, -62)
-scale = Vector2(0.2, 0.196)
+position = Vector2(0, -160)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_u5mnm")
 
 [node name="BotImage" type="Sprite2D" parent="."]
-position = Vector2(5.96046e-08, 64)
+position = Vector2(5.96046e-08, 160)
 rotation = 3.14159
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_u5mnm")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PackedVector2Array(-34, -125, -64, -95, -64, 98, -34, 128, 34, 128, 64, 98, 64, -95, 34, -125)
+polygon = PackedVector2Array(-85, -320, -160, -244, -160, 244, -84, 320, 84, 320, 160, 245, 159, -244, 85, -320)
 
 [node name="Up" type="RichTextLabel" parent="."]
-offset_left = -62.0
-offset_top = -29.0
-offset_right = -32.0
-theme_override_font_sizes/normal_font_size = 20
-bbcode_enabled = true
-text = "[center]0[/center]"
+offset_left = -132.0
+offset_top = -52.0
+offset_right = -98.0
+offset_bottom = -16.0
+theme_override_fonts/normal_font = ExtResource("3_lsh0b")
+theme_override_fonts/bold_font = ExtResource("4_igxbk")
+theme_override_font_sizes/normal_font_size = 32
+text = "0"
 scroll_active = false
-text_direction = 1
 
 [node name="Down" type="RichTextLabel" parent="."]
-offset_left = 32.0
-offset_right = 62.0
-offset_bottom = 30.0
-theme_override_font_sizes/normal_font_size = 20
-bbcode_enabled = true
-text = "[center]0[/center]"
+offset_left = 102.0
+offset_top = 24.0
+offset_right = 136.0
+offset_bottom = 60.0
+theme_override_fonts/normal_font = ExtResource("3_lsh0b")
+theme_override_fonts/bold_font = ExtResource("4_igxbk")
+theme_override_font_sizes/normal_font_size = 32
+text = "0"
+scroll_active = false
+
+[node name="TxtUp" type="Label" parent="."]
+offset_left = -112.0
+offset_top = -294.0
+offset_right = 114.0
+offset_bottom = -153.0
+text = "Enemies take 2 Damage when attacking you"
+label_settings = SubResource("LabelSettings_2ru0o")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 1
+
+[node name="TxtDown" type="Label" parent="."]
+offset_left = -111.0
+offset_top = 153.0
+offset_right = 115.0
+offset_bottom = 294.0
+text = "Enemies take 2 Damage when attacking you"
+label_settings = SubResource("LabelSettings_2ru0o")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 1
+
+[node name="TxtName" type="Label" parent="."]
+offset_left = -105.0
+offset_top = -19.0
+offset_right = 105.0
+offset_bottom = 20.0
+text = "Name"
+label_settings = SubResource("LabelSettings_lsht8")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+text_overrun_behavior = 1
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

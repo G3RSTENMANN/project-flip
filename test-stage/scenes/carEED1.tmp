@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwgamsfxi7qae"]
+
+[ext_resource type="Script" path="res://scripts/card.gd" id="1_si4oa"]
+[ext_resource type="Texture2D" uid="uid://cnp3mrmok72ox" path="res://assets/cards/SpellCardBG.png" id="2_u5mnm"]
+
+[node name="Card" type="Node2D"]
+position = Vector2(132, 889)
+script = ExtResource("1_si4oa")
+
+[node name="TopImage" type="Sprite2D" parent="."]
+position = Vector2(0, -62)
+scale = Vector2(0.2, 0.196)
+texture = ExtResource("2_u5mnm")
+
+[node name="BotImage" type="Sprite2D" parent="."]
+position = Vector2(5.96046e-08, 64)
+rotation = 3.14159
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_u5mnm")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-34, -125, -64, -95, -64, 98, -34, 128, 34, 128, 64, 98, 64, -95, 34, -125)
+
+[node name="Up" type="RichTextLabel" parent="."]
+offset_left = -62.0
+offset_top = -29.0
+offset_right = -32.0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]0[/center]"
+scroll_active = false
+text_direction = 1
+
+[node name="Down" type="RichTextLabel" parent="."]
+offset_left = 32.0
+offset_right = 62.0
+offset_bottom = 30.0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]0[/center]"
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

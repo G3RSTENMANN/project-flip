@@ -12,6 +12,10 @@ size = Vector2(126, 186)
 
 [node name="Main" type="Node2D"]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(958, 540)
+zoom = Vector2(0.5, 0.5)
+
 [node name="CardManager" type="Node2D" parent="."]
 script = ExtResource("1_s8k4i")
 
@@ -21,21 +25,21 @@ script = ExtResource("4_uhkiy")
 [node name="CardSlots" type="Node2D" parent="."]
 
 [node name="CardSlot" parent="CardSlots" instance=ExtResource("3_rqx85")]
-position = Vector2(662, 270)
+position = Vector2(796, 266)
 
 [node name="CardSlot2" parent="CardSlots" instance=ExtResource("3_rqx85")]
-position = Vector2(371, 269)
+position = Vector2(216, 265)
 
 [node name="CardSlot3" parent="CardSlots" instance=ExtResource("3_rqx85")]
-position = Vector2(967, 276)
+position = Vector2(1399, 266)
 
 [node name="Deck" type="Node2D" parent="."]
-position = Vector2(150, 890)
+position = Vector2(-542, 1200)
 script = ExtResource("4_pis31")
 
 [node name="Sprite2D" type="Sprite2D" parent="Deck"]
 z_index = -2
-scale = Vector2(0.7, 0.7)
+scale = Vector2(2, 2)
 texture = ExtResource("5_0kkpl")
 
 [node name="Area2D" type="Area2D" parent="Deck"]
@@ -43,6 +47,7 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Deck/Area2D"]
+scale = Vector2(2.88108, 2.88108)
 shape = SubResource("RectangleShape2D_lmllb")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Deck"]
