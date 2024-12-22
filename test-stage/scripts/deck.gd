@@ -1,24 +1,25 @@
 extends Node2D
 
 const CARD_SCENE_PATH = "res://scenes/card.tscn"
-const CARD_IMAGE_PATH = "res://assets/PC Computer - UNO - Cards Classic.png"
+const REL_IMG_PATH = "res://assets/cards/"
 const CARD_DRAW_SPEED = 0.2
 
-var player_deck = ["Uno", "Rot0", "Rot1", "Rot2"]
-var card_database_reference
-
+var db_ref
+var player_deck
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	db_ref = preload("res://scripts/CardDatabase.gd")
+	player_deck = [Card.new(db_ref.CARDS["BG"],db_ref.CARDS["BG"])]
 	player_deck.shuffle()
 	$RichTextLabel.text = str(player_deck.size())
-	card_database_reference = preload("res://scripts/CardDatabase.gd")
 
 
 func draw_card():
 	# Delete Drawn Card from Deck
-	var card_drawn_name = player_deck[0]
-	player_deck.erase(card_drawn_name)
+	var card_top_name = player_deck[0].top_half.path_name
+	var card_bot_name = player_deck[0].top_half.path_name
+	player_deck.pop_front()
 	if player_deck.size() == 0:
 		$Area2D/CollisionShape2D.disabled = true
 		$Sprite2D.visible = false
@@ -32,26 +33,28 @@ func draw_card():
 	var new_card = card_scene.instantiate()
 	
 	# Loading Card Texture from Single Image
-	# var card_image_path = str("res://assets/" + card_drawn_name + ".png")
-	#new_card.get_node("CardImage").texture = load(CARD_IMAGE_PATH)
+	var card_image_path_top = str(REL_IMG_PATH + card_top_name + ".png")
+	var card_image_path_bot = str(REL_IMG_PATH + card_bot_name + ".png")
+	new_card.get_node("TopImage").texture = load(card_image_path_top)
+	new_card.get_node("BotImage").texture = load(card_image_path_bot)
 	
 	# Drawing specified Region of Image-Texture
-	var image = Image.load_from_file("res://assets/PC Computer - UNO - Cards Classic.png")
-	var img_texture = ImageTexture.create_from_image(
-		image.get_region(
-			Rect2(
-				card_database_reference.CARDS[card_drawn_name][2][0],
-				card_database_reference.CARDS[card_drawn_name][2][1],
-				card_database_reference.CARDS[card_drawn_name][2][2],
-				card_database_reference.CARDS[card_drawn_name][2][3]
-			)
-		)
-	)
-	new_card.get_node("CardImage").texture = img_texture
+	#var image = Image.load_from_file("res://assets/PC Computer - UNO - Cards Classic.png")
+	#var img_texture = ImageTexture.create_from_image(
+		#image.get_region(
+			#Rect2(
+				#card_database_reference.CARDS[card_drawn_name][2][0],
+				#card_database_reference.CARDS[card_drawn_name][2][1],
+				#card_database_reference.CARDS[card_drawn_name][2][2],
+				#card_database_reference.CARDS[card_drawn_name][2][3]
+			#)
+		#)
+	#)
+	#new_card.get_node("CardImage").texture = img_texture
 	
 	# Setting Text on Cards
-	new_card.get_node("Up").text = card_database_reference.CARDS[card_drawn_name][0]
-	new_card.get_node("Down").text = card_database_reference.CARDS[card_drawn_name][1]
+	#new_card.get_node("Up").text = card_database_reference.CARDS[card_drawn_name][0]
+	#new_card.get_node("Down").text = card_database_reference.CARDS[card_drawn_name][1]
 	
 	
 	# Integrating new card

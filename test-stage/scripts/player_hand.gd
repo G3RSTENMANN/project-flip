@@ -1,6 +1,6 @@
 extends Node2D
 
-const CARD_WIDTH = 100
+const CARD_WIDTH = 150
 const HAND_Y_POS = 890
 const DEFAULT_CARD_MOVE_SPEED = 0.1
 
